@@ -1,4 +1,7 @@
+require 'sass'
+require 'sass-rails'
 require 'sprockets/railtie'
+require 'sprockets/sass_processor'
 
 module Less  
   module Rails
@@ -12,8 +15,9 @@ module Less
       config.before_initialize do |app|
         require 'less'
         require 'less-rails'
-        Sprockets::Engines #force autoloading
-        Sprockets.register_engine '.less', LessTemplate
+        #Sprockets::Engines #force autoloading
+        #Sprockets.register_engine '.less', LessTemplate
+        Sprockets.register_transformer '.less', :default, LessTemplate
       end
 
       initializer 'less-rails.before.load_config_initializers', :before => :load_config_initializers, :group => :all do |app|
