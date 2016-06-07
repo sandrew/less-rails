@@ -1,6 +1,6 @@
 # CHANGELOG
 
-### 2.9.0 - 2016-06-07
+### 2.8.1 - 2016-06-??
 
 * Rails 5 and Sprockets 4.0 support
 
