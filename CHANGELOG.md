@@ -1,5 +1,9 @@
 # CHANGELOG
 
+### 2.9.0 - 2016-06-07
+
+* Rails 5 and Sprockets 4.0 support
+
 ### 2.8.0 - ?
 
 * Make it possible to pass parameters to less.rb

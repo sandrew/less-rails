@@ -1,9 +1,6 @@
-require 'sass'
-require 'sass-rails'
 require 'sprockets/railtie'
-require 'sprockets/sass_processor'
 
-module Less  
+module Less
   module Rails
     class Railtie < ::Rails::Railtie
       config.less = ActiveSupport::OrderedOptions.new
@@ -15,9 +12,12 @@ module Less
       config.before_initialize do |app|
         require 'less'
         require 'less-rails'
-        #Sprockets::Engines #force autoloading
-        #Sprockets.register_engine '.less', LessTemplate
-        Sprockets.register_transformer '.less', :default, LessTemplate
+        if Sprockets.respond_to? :register_engine
+          Sprockets::Engines #force autoloading
+          Sprockets.register_engine '.less', LessTemplate
+        else
+          Sprockets.register_transformer '.less', :default, LessTemplate
+        end
       end
 
       initializer 'less-rails.before.load_config_initializers', :before => :load_config_initializers, :group => :all do |app|
@@ -36,11 +36,11 @@ module Less
         assets_stylesheet_paths = app.config.assets.paths.select { |p| p && p.to_s.ends_with?('stylesheets') }
         app.config.less.paths.unshift(*assets_stylesheet_paths)
       end
-      
+
       initializer 'less-rails.setup_compression', :group => :all do |app|
         config.less.compress = app.config.assets.compress
       end
-      
+
     end
   end
 end
